@@ -116,6 +116,13 @@
             background-color: #fff;margin: 5px 0px;
             border-radius: 10px;
             border: 1px solid #AEAEAE;
+            cursor: pointer;
+            transition: all 0.3s ease;
+         }
+         
+         #ca:hover, #ba:hover, #bo:hover, #ne:hover, #ps:hover {
+            transform: scale(1.02);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
          }
 
          .options-list li{
@@ -156,20 +163,20 @@
     <table id="tabla-opciones">
         <tr>
             <td valign="top" align="center"><img id="azul1" src="img/icono-seleccion-on.png" class="imagen"></td>
-            <td valign="top" align="center"></td>
+            <td valign="top" align="center"> </td>
             <td valign="top" align="center"><img id="azul2" src="img/icono-mediopago-off.png" class="imagen"></td>
-            <td valign="top" align="center"></td>
+            <td valign="top" align="center"> </td>
             <td valign="top" align="center"><img id="azul3" src="img/icono-pago-off.png" class="imagen"></td>
-            <td valign="top" align="center"></td>
+            <td valign="top" align="center"> </td>
             <td valign="top" align="center"><img id="azul4" src="img/icono-resultado-off.png" class="imagen"></td>
         </tr>
         <tr>
-            <td valign="top" align="center" class="etq-pasos act-pasos">Ingresa <br>tu Documento</p>}</td>
-            <td valign="top" align="center"> </td>
+            <td valign="top" align="center" class="etq-pasos act-pasos">Ingresa <br>tu Documento</td>
+            <td valign="top" align="center">  </td>
             <td valign="top" align="center" class="etq-pasos">Escoge el <br>medio de pago</td>
-            <td valign="top" align="center"> </td>
-            <td valign="top" align="center" class="etq-pasos">Realiza el <br>Pago en linea</p>}</td>
-            <td valign="top" align="center"> </td>
+            <td valign="top" align="center">  </td>
+            <td valign="top" align="center" class="etq-pasos">Realiza el <br>Pago en linea</td>
+            <td valign="top" align="center">  </td>
             <td valign="top" align="center" class="etq-pasos">Recibe la <br>Confimacion</td>
         </tr>
     </table>
@@ -347,22 +354,16 @@
   
         <section id="section3">
         <br><br>
-        <button id="ca"><img src="img/tar.jpg" id="cai" onclick="selectOption1('Tarjeta')"><p>Tarjetas de Credito</p></button>
-        <button id="ba" style="padding:10px 0px;"><img src="img/ba.png" id="bai" width="140" onclick="selectOption1('TRICOLOR')">.</button>
-        <button id="bo" style="padding:22px 0px;"><img src="img/logo-bogota-mobile.png" width="120" id="bgt" onclick="selectOption1('De Bogota')">.</button>
-        <button id="ne" style="padding:21px 0px;"><img src="img/NE.png" id="nei" width="110" onclick="selectOption1('NEQUI')">.</button>
-        <button id="ps" style="padding:5px 0px;"><img src="img/pse-logo.png" id="nei" width="140" onclick="selectOption1('PSE')">.</button>
-        <input id="selectedValue1" type="hidden">
-        
-        </div>
+        <button id="ca" onclick="selectOption1('Tarjeta')"><img src="img/tar.jpg" id="cai"><p>Tarjetas de Credito</p></button>
+        <button id="ba" style="padding:10px 0px;" onclick="selectOption1('TRICOLOR')"><img src="img/ba.png" id="bai" width="140"><p>Banco de Bogotá</p></button>
+        <button id="bo" style="padding:22px 0px;" onclick="selectOption1('De Bogota')"><img src="img/logo-bogota-mobile.png" width="120" id="bgt"><p>Banco de Bogotá</p></button>
+        <button id="ne" style="padding:21px 0px;" onclick="selectOption1('NEQUI')"><img src="img/NE.png" id="nei" width="110"><p>NEQUI</p></button>
+        <button id="ps" style="padding:5px 0px;" onclick="selectOption1('PSE')"><img src="img/pse-logo.png" id="nei" width="140"><p>Pagos seguros en línea</p></button>
+        <input id="selectedValue2" type="hidden">
         
         <br><br>
-        <button class="boton2" style="margin-top: -0.5rem;" onclick="enviador()">Continuar</button>
+        <button class="boton2" style="margin-top: -0.5rem;" onclick="irAPago()">Continuar</button>
         </section>
-
-
-
-
 
 </main><br><br>
     <footer id="footerr">
@@ -379,6 +380,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </body>
-<script src="js/colores.js?v1"></script>
+<script src="js/colores.js?v3"></script>
 
 </html>

